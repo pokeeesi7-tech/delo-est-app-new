@@ -121,6 +121,10 @@ s=s.replace(
     '                ? const SizedBox(\\n                  width: 22, height: 22, child: CircularProgressIndicator(strokeWidth: 2.4, color: Colors.white))\\n              : Row',
     '                ? SizedBox(\\n                  width: 22, height: 22, child: CircularProgressIndicator(strokeWidth: 2.4, color: p.tx))\\n              : Row'
 )
+s=s.replace(
+    'const SizedBox(\n                  width: 22, height: 22, child: CircularProgressIndicator(strokeWidth: 2.4, color: Colors.white))',
+    'SizedBox(\n                  width: 22, height: 22, child: CircularProgressIndicator(strokeWidth: 2.4, color: p.tx))'
+)
 write(p,s)
 
 print(f'Applied Field Notes native UI under {root}')
