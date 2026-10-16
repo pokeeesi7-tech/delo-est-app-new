@@ -9,9 +9,9 @@ def read(name):
  return p,p.read_text(encoding='utf-8')
 def write(p,s):p.write_text(s,encoding='utf-8')
 p,s=read('theme.dart')
-repls={'Color(0xFFFDF8F3)':'Color(0xFFF4F7FC)','Color(0xFFF7EFE6)':'Color(0xFFEAF0F8)','Color(0xFF1B1530)':'Color(0xFF152039)','Color(0xFF6B6480)':'Color(0xFF65738B)','Color(0xFFEADFD3)':'Color(0xFFDCE4F0)','Color(0xFFFF5A36)':'Color(0xFF405CF5)','Color(0xFFFF9F1C)':'Color(0xFF19B99A)','Color(0xFF12A150)':'Color(0xFF0C9B72)','Color(0xFFC0262D)':'Color(0xFFD74454)','Color(0xFF0A0E1F)':'Color(0xFF0A1120)','Color(0xFF0E1429)':'Color(0xFF111D30)','Color(0xFF121833)':'Color(0xFF142138)','Color(0xFFEEF1FF)':'Color(0xFFF2F6FC)','Color(0xFF9AA3C7)':'Color(0xFFA1B0C6)','Color(0xFF232B52)':'Color(0xFF283850)','Color(0xFF7C5CFF)':'Color(0xFF8EA2FF)','Color(0xFF22D3EE)':'Color(0xFF4AD8BD)','Color(0xFF4ADE80)':'Color(0xFF4BE0B2)','Color(0xFFFF7B84)':'Color(0xFFFF8491)'}
+repls={'Color(0xFFFDF8F3)':'Color(0xFFF4F5EF)','Color(0xFFF7EFE6)':'Color(0xFFE9ECE2)','Color(0xFF1B1530)':'Color(0xFF17251F)','Color(0xFF6B6480)':'Color(0xFF68766C)','Color(0xFFEADFD3)':'Color(0xFFDCE2D6)','Color(0xFFFF5A36)':'Color(0xFFB6E64C)','Color(0xFFFF9F1C)':'Color(0xFF244F3D)','Color(0xFF12A150)':'Color(0xFF21835B)','Color(0xFFC0262D)':'Color(0xFFD74454)','Color(0xFF0A0E1F)':'Color(0xFF101914)','Color(0xFF0E1429)':'Color(0xFF19251D)','Color(0xFF121833)':'Color(0xFF202D24)','Color(0xFFEEF1FF)':'Color(0xFFF1F4EB)','Color(0xFF9AA3C7)':'Color(0xFFA2B0A2)','Color(0xFF232B52)':'Color(0xFF344338)','Color(0xFF7C5CFF)':'Color(0xFFC3F36A)','Color(0xFF22D3EE)':'Color(0xFFC3F36A)','Color(0xFF4ADE80)':'Color(0xFF73D5A2)','Color(0xFFFF7B84)':'Color(0xFFFF8888)'}
 for old,new in repls.items():s=s.replace(old,new)
-if 'elevatedButtonTheme:' not in s:s=s.replace('    outlinedButtonTheme: OutlinedButtonThemeData(\n','''    elevatedButtonTheme: ElevatedButtonThemeData(style: ElevatedButton.styleFrom(foregroundColor: Colors.white, backgroundColor: p.ac, elevation: 0, minimumSize: const Size(0, 46), padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12), textStyle: const TextStyle(fontWeight: FontWeight.w800), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)))),\n    outlinedButtonTheme: OutlinedButtonThemeData(\n''',1)
+if 'elevatedButtonTheme:' not in s:s=s.replace('    outlinedButtonTheme: OutlinedButtonThemeData(\n','''    elevatedButtonTheme: ElevatedButtonThemeData(style: ElevatedButton.styleFrom(foregroundColor: p.tx, backgroundColor: p.ac, elevation: 0, minimumSize: const Size(0, 46), padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12), textStyle: const TextStyle(fontWeight: FontWeight.w800), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)))),\n    outlinedButtonTheme: OutlinedButtonThemeData(\n''',1)
 write(p,s)
 p,s=read('landing.dart');a=s.find('  @override\n  Widget build(BuildContext context) {');b=s.find('\n  Widget _topBar(Pal p)',a)
 if a<0 or b<0:raise SystemExit('Could not locate landing build/top bar')
@@ -61,8 +61,8 @@ s=s.replace('''        color: p.card,
 s=s.replace('borderRadius: BorderRadius.circular(26),','borderRadius: BorderRadius.circular(22),',1)
 write(p,s)
 p,s=read('settings.dart')
-s=s.replace("_iconChoice(p, 'orange', 'Апельсин', 'assets/icon_orange.png', const Color(0xFFFF6A2A))","_iconChoice(p, 'orange', 'Кобальт', 'assets/icon_orange.png', const Color(0xFF405CF5))")
-s=s.replace("_iconChoice(p, 'purple', 'Фиолет', 'assets/icon_purple.png', const Color(0xFF7C5CFF))","_iconChoice(p, 'purple', 'Мята', 'assets/icon_purple.png', const Color(0xFF19B99A))")
+s=s.replace("_iconChoice(p, 'orange', 'Апельсин', 'assets/icon_orange.png', const Color(0xFFFF6A2A))","_iconChoice(p, 'orange', 'Лайм', 'assets/icon_orange.png', const Color(0xFFB6E64C))")
+s=s.replace("_iconChoice(p, 'purple', 'Фиолет', 'assets/icon_purple.png', const Color(0xFF7C5CFF))","_iconChoice(p, 'purple', 'Лес', 'assets/icon_purple.png', const Color(0xFF244F3D))")
 write(p,s)
-p,s=read('pubspec.yaml');s=s.replace('adaptive_icon_background: "#ff5a36"','adaptive_icon_background: "#405CF5"');write(p,s)
+p,s=read('pubspec.yaml');s=s.replace('adaptive_icon_background: "#ff5a36"','adaptive_icon_background: "#b6e64c"');write(p,s)
 print(f'Applied Studio v5 native UI under {root}')
