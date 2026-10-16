@@ -23,6 +23,7 @@ jobs:
           test -f source/delo-est-android/pubspec.yaml
           python3 patch_android.py source/delo-est-android
           python3 patch_android_v4.py source/delo-est-android
+          python3 patch_android_studio.py source/delo-est-android
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
