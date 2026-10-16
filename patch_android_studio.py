@@ -44,7 +44,7 @@ top='''  Widget _topBar(Pal p) {
       Column(crossAxisAlignment:CrossAxisAlignment.start,children:[Text('ДелоЕсть',style:TextStyle(fontSize:20,height:1.15,letterSpacing:-.7,fontWeight:FontWeight.w900,color:p.tx)),Text('Работа рядом',style:TextStyle(fontSize:11.5,color:p.mu,fontWeight:FontWeight.w600))]),
       const Spacer(),
       IconButton(tooltip:'$label · нажмите, чтобы сменить',onPressed:()=>S.i.setTheme(mode==ThemeMode.system?ThemeMode.light:mode==ThemeMode.light?ThemeMode.dark:ThemeMode.system),icon:Icon(icon,color:p.mu),style:IconButton.styleFrom(backgroundColor:p.card,side:BorderSide(color:p.bd))),
-      if(S.i.logged)...[const SizedBox(width:6),IconButton(tooltip:'Сообщения',onPressed:()=>S.i.goTab(4),icon:Stack(clipBehavior:Clip.none,children:[Icon(Icons.chat_bubble_outline_rounded,color:p.tx),if(S.i.unread>0)Positioned(right:-7,top:-6,child:Container(width:9,height:9,decoration:BoxDecoration(color:p.ac2,shape:BoxShape.circle,border:Border.all(color:p.card,width:1.5))))]),style:IconButton.styleFrom(backgroundColor:p.card,side:BorderSide(color:p.bd))))]
+      if(S.i.logged)...[const SizedBox(width:6),IconButton(tooltip:'Сообщения',onPressed:()=>S.i.goTab(4),icon:Stack(clipBehavior:Clip.none,children:[Icon(Icons.chat_bubble_outline_rounded,color:p.tx),if(S.i.unread>0)Positioned(right:-7,top:-6,child:Container(width:9,height:9,decoration:BoxDecoration(color:p.ac2,shape:BoxShape.circle,border:Border.all(color:p.card,width:1.5))))]),style:IconButton.styleFrom(backgroundColor:p.card,side:BorderSide(color:p.bd)))]
     ]));
   }
 '''
