@@ -65,4 +65,53 @@ s=s.replace("_iconChoice(p, 'orange', 'Апельсин', 'assets/icon_orange.pn
 s=s.replace("_iconChoice(p, 'purple', 'Фиолет', 'assets/icon_purple.png', const Color(0xFF7C5CFF))","_iconChoice(p, 'purple', 'Лес', 'assets/icon_purple.png', const Color(0xFF244F3D))")
 write(p,s)
 p,s=read('pubspec.yaml');s=s.replace('adaptive_icon_background: "#ff5a36"','adaptive_icon_background: "#b6e64c"');write(p,s)
-print(f'Applied Studio v5 native UI under {root}')
+
+# Replace only the first-page hero; search state and API behavior remain native.
+if 'FIELD_NOTES_NATIVE_HERO' not in s:
+ hero_patch = r'''  Widget _hero(Pal p) {
+    // FIELD_NOTES_NATIVE_HERO
+    final logged = S.i.logged;
+    const ink = Color(0xFF17251F);
+    const forest = Color(0xFF244F3D);
+    return Container(
+      margin: const EdgeInsets.fromLTRB(14, 8, 14, 10),
+      padding: const EdgeInsets.fromLTRB(20, 24, 20, 18),
+      decoration: BoxDecoration(color: p.ac, borderRadius: BorderRadius.circular(25)),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Row(mainAxisSize: MainAxisSize.min, children: [
+          Container(width: 7, height: 7, decoration: BoxDecoration(color: forest, shape: BoxShape.circle)),
+          const SizedBox(width: 8),
+          Text(logged ? 'С ВОЗВРАЩЕНИЕМ' : 'РАБОТА И ЗАКАЗЫ РЯДОМ', style: const TextStyle(color: forest, fontSize: 10, letterSpacing: 1.1, fontWeight: FontWeight.w900)),
+        ]),
+        const SizedBox(height: 17),
+        Text(logged
+          ? (S.i.name.trim().isEmpty ? 'Продолжим?' : 'Снова в деле, ' + S.i.name.trim())
+          : ((_site['h1a'] ?? 'Найди своё') + '\n' + (_site['h1b'] ?? 'дело.')),
+          style: const TextStyle(fontSize: 36, height: 1.02, letterSpacing: -1.4, fontWeight: FontWeight.w900, color: ink)),
+        const SizedBox(height: 10),
+        Text(logged ? 'Новые задания и люди — здесь.' : (_site['lead'] ?? 'Разовые задания рядом. Понятная оплата.'),
+          style: TextStyle(color: forest.withOpacity(.9), fontSize: 13.5, height: 1.45, fontWeight: FontWeight.w600)),
+        const SizedBox(height: 20),
+        Container(padding: const EdgeInsets.all(4), decoration: BoxDecoration(color: forest.withOpacity(.10), borderRadius: BorderRadius.circular(14)),
+          child: Row(children: [Expanded(child: _modeButton(p, 'Ищу подработку', 0)), Expanded(child: _modeButton(p, 'Ищу исполнителя', 1))])),
+        const SizedBox(height: 10),
+        Container(padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 2), decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(15)),
+          child: TextField(controller: _q, textInputAction: TextInputAction.search, onSubmitted: (_) => _search(), style: const TextStyle(color: ink, fontSize: 14),
+            decoration: const InputDecoration(border: InputBorder.none, enabledBorder: InputBorder.none, focusedBorder: InputBorder.none, hintText: 'Что нужно сделать?', prefixIcon: Icon(Icons.search_rounded, color: forest)))),
+        const SizedBox(height: 9),
+        Container(padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 2), decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(15)), child: _cityAutocomplete(p)),
+        const SizedBox(height: 12),
+        SizedBox(width: double.infinity, child: ElevatedButton.icon(onPressed: _search, icon: const Icon(Icons.arrow_forward_rounded), label: const Text('Найти объявления'),
+          style: ElevatedButton.styleFrom(backgroundColor: ink, foregroundColor: const Color(0xFFF4F5EF), minimumSize: const Size.fromHeight(50), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(13))))),
+      ]),
+    );
+  }
+'''
+ p, s = read('landing.dart')
+ a = s.find('  Widget _hero(Pal p)')
+ b = s.find('\n  Widget _cityAutocomplete(Pal p)', a)
+ if a < 0 or b < 0: raise SystemExit('Could not find native hero boundaries')
+ s = s[:a] + hero_patch + s[b:]
+ write(p, s)
+
+print(f'Applied Field Notes native UI under {root}')
