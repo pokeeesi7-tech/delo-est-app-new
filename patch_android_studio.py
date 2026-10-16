@@ -50,9 +50,7 @@ top='''  Widget _topBar(Pal p) {
 '''
 if a<0 or b<0:raise SystemExit('Could not locate topbar boundary')
 s=s[:a]+top+s[b:]
-pat=r"        const SizedBox(height: 13),s*SingleChildScrollView(s*scrollDirection: Axis.horizontal,.*?
-        ),
-      ]),"
+pat=r"        const SizedBox\(height: 13\),\s*SingleChildScrollView\(\s*scrollDirection: Axis\.horizontal,.*?\n        \),\n      \]\),"
 s=re.sub(pat,'      ]),',s,count=1,flags=re.S)
 s=s.replace('''        color: p.card,
         borderRadius: BorderRadius.circular(26),
