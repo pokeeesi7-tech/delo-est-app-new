@@ -1,0 +1,72 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check source archive
+        run: test -f delo-est-android-redesign.zip || { echo "::error::Upload delo-est-android-redesign.zip to the repository root first"; exit 1; }
+      - name: Extract app source
+        run: |
+          mkdir -p source
+          unzip -q delo-est-android-redesign.zip -d source
+          test -f source/delo-est-android/pubspec.yaml
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.24.5
+          channel: stable
+          cache: true
+      - name: Generate Android project
+        working-directory: source/delo-est-android
+        run: |
+          flutter create --org ru.deloest --project-name delo_est --platforms android --no-pub shell
+          rm -rf shell/lib shell/test shell/pubspec.yaml
+          mkdir -p shell/lib shell/assets
+          cp pubspec.yaml shell/
+          for f in lib/*.dart *.dart; do
+            if [ -f "$f" ]; then cp "$f" shell/lib/; fi
+          done
+          for f in assets/icon.png assets/icon_fg.png assets/icon_orange.png assets/icon_purple.png icon.png icon_fg.png icon_orange.png icon_purple.png; do
+            if [ -f "$f" ]; then cp "$f" shell/assets/; fi
+          done
+          test -f shell/lib/main.dart
+          for need in icon.png icon_fg.png icon_orange.png icon_purple.png; do test -f "shell/assets/$need"; done
+      - name: Install dependencies and icons
+        working-directory: source/delo-est-android/shell
+        run: |
+          flutter pub get
+          dart run flutter_launcher_icons
+      - name: Configure Android app
+        working-directory: source/delo-est-android/shell
+        run: python3 ../configure_android.py
+      - name: Build release APK
+        working-directory: source/delo-est-android/shell
+        run: flutter build apk --release --build-number=${{ github.run_number }} --build-name=1.0.${{ github.run_number }}
+      - name: Rename APK
+        run: cp source/delo-est-android/shell/build/app/outputs/flutter-apk/app-release.apk DeloEst.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: DeloEst-apk
+          path: DeloEst.apk
+          retention-days: 30
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.run_number }}
+          name: ДелоЕсть, сборка ${{ github.run_number }}
+          files: DeloEst.apk
+          make_latest: true
