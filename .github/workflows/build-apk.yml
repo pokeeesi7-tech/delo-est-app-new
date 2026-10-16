@@ -14,16 +14,15 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
-      - name: Extract app source
+      - name: Extract clean app source
         run: |
           test -f delo-est-android-redesign.zip
           mkdir -p source
           unzip -q delo-est-android-redesign.zip -d source
           python3 -m pip install --quiet pillow
           test -f source/delo-est-android/pubspec.yaml
-          python3 patch_android_relaunch.py source/delo-est-android
-          python3 patch_android_fix_build.py source/delo-est-android
-          python3 brand_assets_relaunch.py android source/delo-est-android
+          python3 patch_android_studio.py source/delo-est-android
+          python3 brand_assets.py android source/delo-est-android
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
