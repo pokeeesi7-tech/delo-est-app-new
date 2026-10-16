@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Apply Studio v5 design tokens and a native-first home page to Flutter source."""
+"""Apply Fieldnotes v6 design tokens and a native-first home page to Flutter source."""
 from pathlib import Path
 import re,sys
 root=Path(sys.argv[1] if len(sys.argv)>1 else '.')
@@ -9,7 +9,7 @@ def read(name):
  return p,p.read_text(encoding='utf-8')
 def write(p,s):p.write_text(s,encoding='utf-8')
 p,s=read('theme.dart')
-repls={'Color(0xFFFDF8F3)':'Color(0xFFF4F5EF)','Color(0xFFF7EFE6)':'Color(0xFFE9ECE2)','Color(0xFF1B1530)':'Color(0xFF17251F)','Color(0xFF6B6480)':'Color(0xFF68766C)','Color(0xFFEADFD3)':'Color(0xFFDCE2D6)','Color(0xFFFF5A36)':'Color(0xFFB6E64C)','Color(0xFFFF9F1C)':'Color(0xFF244F3D)','Color(0xFF12A150)':'Color(0xFF21835B)','Color(0xFFC0262D)':'Color(0xFFD74454)','Color(0xFF0A0E1F)':'Color(0xFF101914)','Color(0xFF0E1429)':'Color(0xFF19251D)','Color(0xFF121833)':'Color(0xFF202D24)','Color(0xFFEEF1FF)':'Color(0xFFF1F4EB)','Color(0xFF9AA3C7)':'Color(0xFFA2B0A2)','Color(0xFF232B52)':'Color(0xFF344338)','Color(0xFF7C5CFF)':'Color(0xFFC3F36A)','Color(0xFF22D3EE)':'Color(0xFFC3F36A)','Color(0xFF4ADE80)':'Color(0xFF73D5A2)','Color(0xFFFF7B84)':'Color(0xFFFF8888)'}
+repls={'Color(0xFFFDF8F3)':'Color(0xFFF4F5EF)','Color(0xFFF7EFE6)':'Color(0xFFE9ECE2)','Color(0xFF1B1530)':'Color(0xFF17251F)','Color(0xFF6B6480)':'Color(0xFF68766C)','Color(0xFFEADFD3)':'Color(0xFFDCE2D6)','Color(0xFFFF5A36)':'Color(0xFFB6E64C)','Color(0xFFFF9F1C)':'Color(0xFF244F3D)','Color(0xFF12A150)':'Color(0xFF21835B)','Color(0xFFC0262D)':'Color(0xFFBD4B45)','Color(0xFF0A0E1F)':'Color(0xFF101914)','Color(0xFF0E1429)':'Color(0xFF19251D)','Color(0xFF121833)':'Color(0xFF202D24)','Color(0xFFEEF1FF)':'Color(0xFFF1F4EB)','Color(0xFF9AA3C7)':'Color(0xFFA2B0A2)','Color(0xFF232B52)':'Color(0xFF344338)','Color(0xFF7C5CFF)':'Color(0xFFC3F36A)','Color(0xFF22D3EE)':'Color(0xFFC3F36A)','Color(0xFF4ADE80)':'Color(0xFF73D5A2)','Color(0xFFFF7B84)':'Color(0xFFFF8888)'}
 for old,new in repls.items():s=s.replace(old,new)
 if 'elevatedButtonTheme:' not in s:s=s.replace('    outlinedButtonTheme: OutlinedButtonThemeData(\n','''    elevatedButtonTheme: ElevatedButtonThemeData(style: ElevatedButton.styleFrom(foregroundColor: p.tx, backgroundColor: p.ac, elevation: 0, minimumSize: const Size(0, 46), padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12), textStyle: const TextStyle(fontWeight: FontWeight.w800), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)))),\n    outlinedButtonTheme: OutlinedButtonThemeData(\n''',1)
 write(p,s)
@@ -64,7 +64,7 @@ p,s=read('settings.dart')
 s=s.replace("_iconChoice(p, 'orange', 'Апельсин', 'assets/icon_orange.png', const Color(0xFFFF6A2A))","_iconChoice(p, 'orange', 'Лайм', 'assets/icon_orange.png', const Color(0xFFB6E64C))")
 s=s.replace("_iconChoice(p, 'purple', 'Фиолет', 'assets/icon_purple.png', const Color(0xFF7C5CFF))","_iconChoice(p, 'purple', 'Лес', 'assets/icon_purple.png', const Color(0xFF244F3D))")
 write(p,s)
-p,s=read('pubspec.yaml');s=s.replace('adaptive_icon_background: "#ff5a36"','adaptive_icon_background: "#b6e64c"');write(p,s)
+p,s=read('pubspec.yaml');s=s.replace('adaptive_icon_background: "#245B45"','adaptive_icon_background: "#b6e64c"');write(p,s)
 
 # Replace only the first-page hero; search state and API behavior remain native.
 if 'FIELD_NOTES_NATIVE_HERO' not in s:
