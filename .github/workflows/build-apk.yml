@@ -14,18 +14,15 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
-      - name: Check source archive
-        run: test -f delo-est-android-redesign.zip || { echo "::error::Upload delo-est-android-redesign.zip to the repository root first"; exit 1; }
       - name: Extract app source
         run: |
+          test -f delo-est-android-redesign.zip
           mkdir -p source
           unzip -q delo-est-android-redesign.zip -d source
           python3 -m pip install --quiet pillow
           test -f source/delo-est-android/pubspec.yaml
-          python3 patch_android.py source/delo-est-android
-          python3 patch_android_v4.py source/delo-est-android
-          python3 patch_android_studio.py source/delo-est-android
-          python3 brand_assets.py android source/delo-est-android
+          python3 patch_android_relaunch.py source/delo-est-android
+          python3 brand_assets_relaunch.py android source/delo-est-android
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -42,12 +39,8 @@ jobs:
           rm -rf shell/lib shell/test shell/pubspec.yaml
           mkdir -p shell/lib shell/assets
           cp pubspec.yaml shell/
-          for f in lib/*.dart *.dart; do
-            if [ -f "$f" ]; then cp "$f" shell/lib/; fi
-          done
-          for f in assets/icon.png assets/icon_fg.png assets/icon_orange.png assets/icon_purple.png icon.png icon_fg.png icon_orange.png icon_purple.png; do
-            if [ -f "$f" ]; then cp "$f" shell/assets/; fi
-          done
+          for f in lib/*.dart *.dart; do if [ -f "$f" ]; then cp "$f" shell/lib/; fi; done
+          for f in assets/icon.png assets/icon_fg.png assets/icon_orange.png assets/icon_purple.png icon.png icon_fg.png icon_orange.png icon_purple.png; do if [ -f "$f" ]; then cp "$f" shell/assets/; fi; done
           test -f shell/lib/main.dart
           for need in icon.png icon_fg.png icon_orange.png icon_purple.png; do test -f "shell/assets/$need"; done
       - name: Install dependencies and icons
