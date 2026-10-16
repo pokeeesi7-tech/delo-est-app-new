@@ -5,7 +5,7 @@ from PIL import Image, ImageDraw, ImageFont
 import sys, shutil
 mode=sys.argv[1] if len(sys.argv)>1 else 'all'
 root=Path(sys.argv[2] if len(sys.argv)>2 else '.');root.mkdir(parents=True,exist_ok=True)
-S=1024;COBALT=(64,92,245,255);MINT=(74,216,189,255);INK=(21,32,57,255);WHITE=(255,255,255,255)
+S=1024;COBALT=(182,230,76,255);MINT=(36,79,61,255);INK=(23,37,31,255);WHITE=INK
 def icon(bg,mark,accent,size=512,outline=True):
  im=Image.new('RGBA',(S,S),(0,0,0,0));d=ImageDraw.Draw(im);d.rounded_rectangle((0,0,S-1,S-1),radius=220,fill=bg)
  if outline:d.rounded_rectangle((98,98,926,926),radius=190,outline=(accent[0],accent[1],accent[2],100),width=7)
@@ -24,7 +24,7 @@ def og(path):
  bold='/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf';regular='/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'
  try:f1=ImageFont.truetype(bold,62);f2=ImageFont.truetype(regular,30);f3=ImageFont.truetype(bold,22);f4=ImageFont.truetype(bold,54)
  except Exception:f1=f2=f3=f4=ImageFont.load_default()
- d.text((210,91),'ДелоЕсть',font=f1,fill=(21,32,57));d.text((84,250),'Подработка рядом.',font=f4,fill=(21,32,57));d.text((84,322),'Исполнители — за пару минут.',font=f4,fill=(64,92,245));d.text((88,424),'Объявления  ·  Отклики  ·  Чат',font=f2,fill=(101,115,139));d.rounded_rectangle((84,512,385,572),radius=16,fill=(64,92,245));d.text((113,529),'Найти своё дело',font=f3,fill='white');im.save(path,optimize=True)
+ d.text((210,91),'ДелоЕсть',font=f1,fill=(23,37,31));d.text((84,250),'Подработка рядом.',font=f4,fill=(23,37,31));d.text((84,322),'Исполнители — за пару минут.',font=f4,fill=(182,230,76));d.text((88,424),'Объявления  ·  Отклики  ·  Чат',font=f2,fill=(101,115,139));d.rounded_rectangle((84,512,385,572),radius=16,fill=(182,230,76));d.text((113,529),'Найти своё дело',font=f3,fill='white');im.save(path,optimize=True)
 if mode in ('site','all'):
  im=Image.new('RGBA',(192,192),COBALT);d=ImageDraw.Draw(im);pts=[(52,100),(80,128),(142,63)];d.line(pts,fill='white',width=18,joint='curve')
  for x,y in pts:
