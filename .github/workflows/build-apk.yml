@@ -21,6 +21,7 @@ jobs:
           mkdir -p source
           unzip -q delo-est-android-redesign.zip -d source
           test -f source/delo-est-android/pubspec.yaml
+          python3 patch_android.py source/delo-est-android
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
