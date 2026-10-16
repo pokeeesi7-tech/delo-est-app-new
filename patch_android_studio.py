@@ -125,6 +125,13 @@ s=s.replace(
     'const SizedBox(\n                  width: 22, height: 22, child: CircularProgressIndicator(strokeWidth: 2.4, color: Colors.white))',
     'SizedBox(\n                  width: 22, height: 22, child: CircularProgressIndicator(strokeWidth: 2.4, color: p.tx))'
 )
+a=s.find('class GradBtn extends StatelessWidget')
+b=s.find('class OutBtn extends StatelessWidget', a)
+if a >= 0 and b > a:
+    block=s[a:b]
+    block=block.replace('Icon(icon, color: Colors.white, size: 21)', 'Icon(icon, color: p.tx, size: 21)')
+    block=block.replace('Text(text, style: const TextStyle(color: Colors.white,', 'Text(text, style: TextStyle(color: p.tx,')
+    s=s[:a]+block+s[b:]
 write(p,s)
 
 print(f'Applied Field Notes native UI under {root}')
