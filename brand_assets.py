@@ -19,12 +19,12 @@ def foreground(size=512):
   r=47;d.ellipse((x-r,y-r,x+r,y+r),fill=WHITE)
  d.ellipse((690,190,790,290),fill=MINT);return im.resize((size,size),Image.Resampling.LANCZOS)
 def og(path):
- W,H=1200,630;im=Image.new('RGB',(W,H),(244,247,252));d=ImageDraw.Draw(im);d.ellipse((770,-260,1450,400),fill=(225,234,255));d.ellipse((900,170,1350,620),fill=(218,247,241))
+ W,H=1200,630;im=Image.new('RGB',(W,H),(244,244,237));d=ImageDraw.Draw(im);d.ellipse((770,-260,1450,400),fill=(225,236,211));d.ellipse((900,170,1350,620),fill=(225,239,214))
  d.rounded_rectangle((80,76,182,178),radius=26,fill=COBALT);d.line([(106,128),(127,148),(157,108)],fill=INK,width=12,joint='curve');d.ellipse((144,90,163,109),fill=MINT)
  bold='/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf';regular='/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'
  try:f1=ImageFont.truetype(bold,62);f2=ImageFont.truetype(regular,30);f3=ImageFont.truetype(bold,22);f4=ImageFont.truetype(bold,54)
  except Exception:f1=f2=f3=f4=ImageFont.load_default()
- d.text((210,91),'ДелоЕсть',font=f1,fill=(23,37,31));d.text((84,250),'Подработка рядом.',font=f4,fill=(23,37,31));d.text((84,322),'Исполнители — за пару минут.',font=f4,fill=(36,79,61));d.text((88,424),'Объявления  ·  Отклики  ·  Чат',font=f2,fill=(101,115,139));d.rounded_rectangle((84,512,385,572),radius=16,fill=(182,230,76));d.text((113,529),'Найти своё дело',font=f3,fill=INK);im.save(path,optimize=True)
+ d.text((210,91),'ДелоЕсть',font=f1,fill=(23,37,31));d.text((84,250),'Подработка рядом.',font=f4,fill=(23,37,31));d.text((84,322),'Исполнители — за пару минут.',font=f4,fill=(36,79,61));d.text((88,424),'Объявления  ·  Отклики  ·  Чат',font=f2,fill=(102,117,108));d.rounded_rectangle((84,512,385,572),radius=16,fill=(182,230,76));d.text((113,529),'Найти своё дело',font=f3,fill=INK);im.save(path,optimize=True)
 if mode in ('site','all'):
  im=Image.new('RGBA',(192,192),COBALT);d=ImageDraw.Draw(im);pts=[(52,100),(80,128),(142,63)];d.line(pts,fill=INK,width=18,joint='curve')
  for x,y in pts:
